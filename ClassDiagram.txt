@@ -1,3 +1,0 @@
-# UML code for class diagram
-# render using https://www.planttext.com
-
