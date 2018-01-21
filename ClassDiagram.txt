@@ -1,3 +1,62 @@
 # UML code for class diagram
-# render using https://www.planttext.com
+# render using https://www.planttext.com or PlantUML Renderer
 
+@startuml
+
+title Group Project 1 - Class Diagram
+
+
+class Controller {
+  .. Members ..
+- PatientTrial: Trial 
+
+  .. Methods ..
++Controller(): Constructor
++ActionPerformed()
+#createImageIcon()
+-createAndShowGUI()
+}
+
+class Trial {
+    .. Members ..
+    -Patients: List
+    -Records: List
+    
+    .. Methods ..
+    +Trial(): Constructor
+    +LoadFile(String)
+    +BeginStudy(String)
+    +EndStudy(String)
+    +AddReading(String, String, String, Generic, Long)
+    +SaveFile(String)
+    
+}
+class Record {
+    .. Members ..
+    -patient_id: String
+    -reading_type: String
+    -reading_id: String
+    -reading_value: Generic
+        //type dependent on reading_type
+    -reading_date: longInt
+        //UNIX time
+    
+    .. Methods ..
+    +Record(): Constructor
+    +Accessors/Mutators as appropriate
+}
+class Patient {
+    .. Members ..
+    -patient_id: String
+    -patient_active: Boolean
+    
+    .. Methods ..
+    +Patient(): Constructor
+    +Accessors/Mutators as appropriate
+}
+
+Controller "1" *-down- "1" Trial
+Trial "1" *-down- "many" Record
+Trial "1" *-down- "many" Patient
+
+@enduml

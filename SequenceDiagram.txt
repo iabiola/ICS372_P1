@@ -3,7 +3,7 @@
 
 title Trial Controller
 
-note left of Controller: Application launch
+note left of Controller: Application Launch
 Controller->Trial: new Trial();
 Trial->Trial: create empty Records <List>
 Trial->Trial: create empty Patients <List>
@@ -60,7 +60,7 @@ loop User input loop
 
     else UserSelection - Load Additional JSON File
         Controller->Controller: prompt user for [filename]
-        Controller->Trial: load([filename].json)
+        Controller->Trial: LoadFile([filename].json)
         note right of Trial: Load new JSON file
         Trial->Trial: Load [filename].json
         loop foreach record in [filename].json
@@ -100,7 +100,8 @@ loop User input loop
     else UserSelection - End Program
         Controller->Controller: end self
 
+    end
 end
 
-
+note left of Controller: Application Exit
 
