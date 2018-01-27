@@ -38,17 +38,16 @@ import javax.swing.*;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.*;
 
-/*
- * FileChooserDemo.java uses these files:
- *   images/Open16.gif
- *   images/Save16.gif
- */
 public class Controller extends JPanel implements ActionListener {
     static private final String newline = "\n";
-    JButton openButton, saveButton, BeginStudyButton, EndStudyButton, AddReadingButton, ExitButton;
+    JButton openButton, saveButton, BeginStudyButton, 
+    		EndStudyButton, AddReadingButton, ExitButton;
     JTextArea log;
     JFileChooser fc;
 
+	// Commented line refers to functions or classes not yet implemented.
+	// static private Trial thisTrial = new Trial();
+    
     public Controller() {
         super(new BorderLayout());
 
@@ -62,13 +61,9 @@ public class Controller extends JPanel implements ActionListener {
         //Create a file chooser
         fc = new JFileChooser();
 
-        //Create the open button.  We use the image from the JLF
-        //Graphics Repository (but we extracted it from the jar).
         openButton = new JButton("Load JSON...");
         openButton.addActionListener(this);
 
-        //Create the save button.  We use the image from the JLF
-        //Graphics Repository (but we extracted it from the jar).
         saveButton = new JButton("Export JSON...");
         saveButton.addActionListener(this);
         
@@ -84,9 +79,6 @@ public class Controller extends JPanel implements ActionListener {
         ExitButton = new JButton("Exit");
         ExitButton.addActionListener(this);
         
-        
-        
-
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(openButton);
@@ -109,8 +101,11 @@ public class Controller extends JPanel implements ActionListener {
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                //This is where a real application would open the file.
                 log.append("Opening: " + file.getName() + "." + newline);
+
+                // Commented line refers to functions or classes not yet implemented.
+                // log.append(thisTrial.LoadFile(file.getName())+newline);
+                
             } else {
                 log.append("Open command cancelled by user." + newline);
             }
@@ -127,25 +122,19 @@ public class Controller extends JPanel implements ActionListener {
                 log.append("Save command cancelled by user." + newline);
             }
             log.setCaretPosition(log.getDocument().getLength());
+        } else if (e.getSource() == BeginStudyButton) {
+        	String PatientID = JOptionPane.showInputDialog("Please input a Patient ID to begin a study.");
+            log.append("Attempting to set patient ID: " + PatientID + " active for Trial." + newline);
+            log.setCaretPosition(log.getDocument().getLength());
+        } else if (e.getSource() == EndStudyButton) {
+        	
+        } else if (e.getSource() == AddReadingButton) {
+        	
+        } else if (e.getSource() == ExitButton) {
+        	
         }
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = Controller.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event dispatch thread.
-     */
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Trial Controller");
@@ -160,6 +149,7 @@ public class Controller extends JPanel implements ActionListener {
     }
 
     public static void main(String[] args) {
+    	
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
