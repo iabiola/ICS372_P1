@@ -36,9 +36,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.*;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Controller extends JPanel implements ActionListener {
@@ -188,11 +185,12 @@ public class Controller extends JPanel implements ActionListener {
             	
             	// Parse Date.
             	boolean DateIsValid = true;
-            	// If the input is bad, we could generate a number of different
-            	// exception types here: array index/out-of-bounds, parse errors, etc.
+            	// create an empty Calendar object to store user input and get timestamp. 
             	Calendar aDate = Calendar.getInstance();
             	aDate.clear();
             	
+            	// Try block: if the input is bad, we could generate a number of different
+            	// exception types here: array index/out-of-bounds, parse errors, etc.
             	try {
             		String[] DateArray = ReadingDate.split("/", 3);
             		int MM = Integer.parseInt(DateArray[0]);
@@ -203,14 +201,11 @@ public class Controller extends JPanel implements ActionListener {
             		aDate.set(Calendar.YEAR, YYYY);
             		log.append(aDate.getTime().toString() + newline);
             		log.append(aDate.getTimeInMillis() + newline);
-            		
-            		
            		// so catch everything and blame the user. 
             	} catch (Exception thisException)
             	{
             		DateIsValid = false;
             	}
-            	
             	
             	if ( ( PatientIDText.length() < 1 ) | (PatientIDText == null ) | 
             			( ReadingTypeText.length() < 1 ) | (ReadingTypeText == null ) |
@@ -218,7 +213,7 @@ public class Controller extends JPanel implements ActionListener {
             			( ReadingValue.length() < 1 ) | (ReadingValue == null ) |
             			DateIsValid != true )
             	{
-            		log.append("Could not add Reading - user left required input blank." + newline);
+            		log.append("Could not add Reading - user left required input blank or malformed date." + newline);
             	} else {
                 	log.append("Patient ID   : " + PatientIDText + newline);
                 	log.append("Reading Type : " + ReadingTypeText + newline);
@@ -226,7 +221,8 @@ public class Controller extends JPanel implements ActionListener {
                 	log.append("Reading Value: " + ReadingValue + newline);
                 	log.append("Reading Date : " + ReadingDate + newline);
                     // Commented line refers to functions or classes not yet implemented.
-                	// log.append(thisTrial.addReading({ PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue }, aDate.getTimeInMillis()) + newline);
+                	// log.append(thisTrial.addReading({ PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue }, 
+                			// aDate.getTimeInMillis()) + newline);
             	}
             } else {
             	log.append("User cancelled Add Reading." + newline);
