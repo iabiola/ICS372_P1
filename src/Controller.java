@@ -38,6 +38,9 @@ import javax.swing.*;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Controller extends JPanel implements ActionListener {
     static private final String newline = "\n";
     JButton openButton, saveButton, BeginStudyButton, 
@@ -159,6 +162,7 @@ public class Controller extends JPanel implements ActionListener {
         	JTextField reading_type = new JTextField(24);
         	JTextField reading_id = new JTextField(24);
         	JTextField reading_value = new JTextField(24);
+        	JTextField reading_date = new JTextField(24);
         	
         	JPanel myPanel = new JPanel();
         	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -170,7 +174,9 @@ public class Controller extends JPanel implements ActionListener {
             myPanel.add(reading_id);
             myPanel.add(new JLabel("Reading Value: "));
             myPanel.add(reading_value);
-
+            myPanel.add(new JLabel("Reading Date: MM/DD/YYYY: "));
+            myPanel.add(reading_date);
+            
             int result = JOptionPane.showConfirmDialog(null, myPanel, 
                     "Please Enter Reading Values", JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION) {
@@ -178,11 +184,38 @@ public class Controller extends JPanel implements ActionListener {
             	String ReadingTypeText = reading_type.getText();
             	String ReadingIDText = reading_id.getText();
             	String ReadingValue = reading_value.getText();
+            	String ReadingDate = reading_date.getText();
+            	
+            	// Parse Date.
+            	boolean DateIsValid = true;
+            	// If the input is bad, we could generate a number of different
+            	// exception types here: array index/out-of-bounds, parse errors, etc.
+            	Calendar aDate = Calendar.getInstance();
+            	aDate.clear();
+            	
+            	try {
+            		String[] DateArray = ReadingDate.split("/", 3);
+            		int MM = Integer.parseInt(DateArray[0]);
+            		int DD = Integer.parseInt(DateArray[1]);
+            		int YYYY = Integer.parseInt(DateArray[2]);
+            		aDate.set(Calendar.MONTH, MM-1); 
+            		aDate.set(Calendar.DAY_OF_MONTH, DD);
+            		aDate.set(Calendar.YEAR, YYYY);
+            		log.append(aDate.getTime().toString() + newline);
+            		
+            		
+           		// so catch everything and blame the user. 
+            	} catch (Exception thisException)
+            	{
+            		DateIsValid = false;
+            	}
+            	
             	
             	if ( ( PatientIDText.length() < 1 ) | (PatientIDText == null ) | 
             			( ReadingTypeText.length() < 1 ) | (ReadingTypeText == null ) |
             			( ReadingIDText.length() < 1 ) | (ReadingIDText == null ) |
-            			( ReadingValue.length() < 1 ) | (ReadingValue == null ) )
+            			( ReadingValue.length() < 1 ) | (ReadingValue == null ) |
+            			DateIsValid != true )
             	{
             		log.append("Could not add Reading - user left required input blank." + newline);
             	} else {
@@ -190,8 +223,9 @@ public class Controller extends JPanel implements ActionListener {
                 	log.append("Reading Type : " + ReadingTypeText + newline);
                 	log.append("Reading ID   : " + ReadingIDText + newline);
                 	log.append("Reading Value: " + ReadingValue + newline);
+                	log.append("Reading Date : " + ReadingDate + newline);
                     // Commented line refers to functions or classes not yet implemented.
-                	// log.append(thisTrial.addReading({PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue}) + newline);
+                	// log.append(thisTrial.addReading({ PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue }, aDate.getTimeInMillis()) + newline);
             	}
             } else {
             	log.append("User cancelled Add Reading." + newline);
