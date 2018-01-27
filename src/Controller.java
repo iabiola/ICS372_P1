@@ -101,10 +101,10 @@ public class Controller extends JPanel implements ActionListener {
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                log.append("Opening: " + file.getName() + "." + newline);
+                log.append("Opening: " + file.getAbsolutePath() + "." + newline);
 
                 // Commented line refers to functions or classes not yet implemented.
-                // log.append(thisTrial.LoadFile(file.getName())+newline);
+                // log.append(thisTrial.LoadFile(file.getAbsolutePath())+newline);
                 
             } else {
                 log.append("Open command cancelled by user." + newline);
@@ -116,22 +116,115 @@ public class Controller extends JPanel implements ActionListener {
             int returnVal = fc.showSaveDialog(Controller.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                //This is where a real application would save the file.
-                log.append("Saving: " + file.getName() + "." + newline);
+                log.append("Saving: " + file.getAbsolutePath() + "." + newline);
+
+                // Commented line refers to functions or classes not yet implemented.
+                // log.append(thisTrial.saveFile(file.getAbsolutePath())+newline);
             } else {
                 log.append("Save command cancelled by user." + newline);
             }
             log.setCaretPosition(log.getDocument().getLength());
+
+        // Handle begin study action (set patient to active.)
         } else if (e.getSource() == BeginStudyButton) {
         	String PatientID = JOptionPane.showInputDialog("Please input a Patient ID to begin a study.");
-            log.append("Attempting to set patient ID: " + PatientID + " active for Trial." + newline);
+            if ( ( PatientID != null ) && ( PatientID.length() > 0 ) )
+            { 
+            	log.append("Attempting to set patient ID: " + PatientID + " active for Trial." + newline);
+                // Commented line refers to functions or classes not yet implemented.
+                // log.append(thisTrial.beginStudy(PatientID) + newline);
+           	} else {
+           		log.append("User cancelled command." + newline);
+           	}
             log.setCaretPosition(log.getDocument().getLength());
+
+        // Handle end study action (set patient to inactive.
         } else if (e.getSource() == EndStudyButton) {
-        	
+        	String PatientID = JOptionPane.showInputDialog("Please input a Patient ID to end participation.");
+            if ( ( PatientID != null ) && ( PatientID.length() > 0 ) )
+            { 
+            	log.append("Attempting to set patient ID: " + PatientID + " inactive for Trial." + newline);
+                // Commented line refers to functions or classes not yet implemented.
+                // log.append(thisTrial.endStudy(PatientID) + newline);
+           	} else {
+           		log.append("User cancelled command." + newline);
+           	}
+            log.setCaretPosition(log.getDocument().getLength());
+
+        // Handle addReading action
         } else if (e.getSource() == AddReadingButton) {
         	
-        } else if (e.getSource() == ExitButton) {
+        	// Prompt user for record data.
+        	JTextField patient_id = new JTextField(24);
+        	JTextField reading_type = new JTextField(24);
+        	JTextField reading_id = new JTextField(24);
+        	JTextField reading_value = new JTextField(24);
         	
+        	JPanel myPanel = new JPanel();
+        	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+            myPanel.add(new JLabel("Patient ID:"));
+            myPanel.add(patient_id);
+            myPanel.add(new JLabel("Reading Type: "));
+            myPanel.add(reading_type);
+            myPanel.add(new JLabel("Reading ID: "));
+            myPanel.add(reading_id);
+            myPanel.add(new JLabel("Reading Value: "));
+            myPanel.add(reading_value);
+
+            int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                    "Please Enter Reading Values", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+            	String PatientIDText = patient_id.getText();
+            	String ReadingTypeText = reading_type.getText();
+            	String ReadingIDText = reading_id.getText();
+            	String ReadingValue = reading_value.getText();
+            	
+            	if ( ( PatientIDText.length() < 1 ) | (PatientIDText == null ) | 
+            			( ReadingTypeText.length() < 1 ) | (ReadingTypeText == null ) |
+            			( ReadingIDText.length() < 1 ) | (ReadingIDText == null ) |
+            			( ReadingValue.length() < 1 ) | (ReadingValue == null ) )
+            	{
+            		log.append("Could not add Reading - user left required input blank." + newline);
+            	} else {
+                	log.append("Patient ID   : " + PatientIDText + newline);
+                	log.append("Reading Type : " + ReadingTypeText + newline);
+                	log.append("Reading ID   : " + ReadingIDText + newline);
+                	log.append("Reading Value: " + ReadingValue + newline);
+                    // Commented line refers to functions or classes not yet implemented.
+                	// log.append(thisTrial.addReading({PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue}) + newline);
+            	}
+            } else {
+            	log.append("User cancelled Add Reading." + newline);
+            }
+            log.setCaretPosition(log.getDocument().getLength());
+        // Exit program
+        } else if (e.getSource() == ExitButton) {
+        	String[] options = { "Save first...", "Don't save.", "Cancel." };
+        	
+        	int choice = JOptionPane.showOptionDialog(null, "Do you want to save before closing?",
+                    "Exit Program", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, options, options[0]);
+        	if ( choice == 0 )
+        	{
+            	int returnVal = fc.showSaveDialog(Controller.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    log.append("Saving: " + file.getName() + "." + newline);
+                    // Commented line refers to functions or classes not yet implemented.
+                    // log.append(thisTrial.saveFile(file.getName())+newline);        		
+                }
+                System.exit(0);
+        	}
+        	
+            if ( choice == 1 )
+            {
+            	System.exit(0);
+            }
+            if ( choice == 2 )
+            {
+                log.append("Exit command cancelled by user." + newline);
+            }
+            log.setCaretPosition(log.getDocument().getLength());
         }
     }
 
