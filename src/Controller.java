@@ -202,6 +202,7 @@ public class Controller extends JPanel implements ActionListener {
             		aDate.set(Calendar.DAY_OF_MONTH, DD);
             		aDate.set(Calendar.YEAR, YYYY);
             		log.append(aDate.getTime().toString() + newline);
+            		log.append(aDate.getTimeInMillis() + newline);
             		
             		
            		// so catch everything and blame the user. 
