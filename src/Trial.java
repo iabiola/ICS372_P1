@@ -48,25 +48,25 @@ public class Trial {
 		return "Hello World!";
 	}
 	
-	public void addReading(String patient_id, String reading_type, 
+	public String addReading(String patient_id, String reading_type, 
 			String reading_id,long reading_date)
 	{
-		
+		Boolean result = false;
 		for( int i = 0; i < patients.size(); i++) {
-			
-			
-			
-			if(patients.get(i).getPatient_id() == patient_id && patients.get(i).isPatient_active()){
+			if(patients.get(i).getPatient_id() == patient_id && patients.get(i).isPatient_active())
+			{
 				Record newRecord = new Record(patient_id,reading_type,reading_id,reading_date);
 				
 				records.add(newRecord);
-			System.out.println("New record added");
-				
-				
+				result = true;
+				break;
 			}
-			else {
-				System.out.println("Patient not in the system or inactive for the trial");
-			}
+		}
+		if ( result )
+		{
+			return "New record added";
+		} else {
+			return "Patient not in the system or inactive for the trial";
 		}
 	}
 		
