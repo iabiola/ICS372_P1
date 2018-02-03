@@ -105,7 +105,7 @@ public class Controller extends JPanel implements ActionListener {
                 log.append("Opening: " + file.getAbsolutePath() + "." + newline);
 
                 // Commented line refers to functions or classes not yet implemented.
-                // log.append(thisTrial.LoadFile(file.getAbsolutePath())+newline);
+                // log.append(thisTrial.loadFile(file.getAbsolutePath())+newline);
                 
             } else {
                 log.append("Open command cancelled by user." + newline);
