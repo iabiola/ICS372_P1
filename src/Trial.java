@@ -21,16 +21,30 @@ public class Trial {
 
 	public String endStudy(String patientID)
 	{
+		/*
+		 *  Set patient_active = False for Patient in patients with
+		 *  patient_id matching patientID parameter.
+		 *  
+		 *  Return useful String for console output.
+		 */
 		return "Hello World!";
 	}
 	
 	public String beginStudy(String patientID)
 	{
+		/*
+		 *  Set patient_active = True for Patient in patients with
+		 *  patient_id matching patientID parameter.
+		 *  
+		 *  Return useful String for console output.
+		 */
 		return "Hello World!";
 	}
 	
 	public String saveFile(String filePathToSave)
 	{
+		// Output JSON file with records.
+		// Return useful String for console output.
 		return "Hello World!";
 	}
 	
