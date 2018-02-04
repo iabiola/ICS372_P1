@@ -48,7 +48,7 @@ public class Trial {
 		// Return useful String for console output.
 		return "Hello World!";
 		try (FileWriter file = new FileWriter(" ")) {
-			file.write(obj.toString());
+			file.write(jsonObject.toString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + obj);
 		
