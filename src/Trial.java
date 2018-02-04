@@ -43,9 +43,15 @@ public class Trial {
 	
 	public String saveFile(String filePathToSave)
 	{
+		
 		// Output JSON file with records.
 		// Return useful String for console output.
 		return "Hello World!";
+		try (FileWriter file = new FileWriter(" ")) {
+			file.write(obj.toString());
+			System.out.println("Successfully Copied JSON Object to File...");
+			System.out.println("\nJSON Object: " + obj);
+		
 	}
 	
 	public String addReading(String patient_id, String reading_type, 
