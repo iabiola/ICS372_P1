@@ -81,7 +81,7 @@ public class Trial {
 		}	
 	}
 
-	public String addReadnig(String patient_id, String reading_type, String reading_id, String reading_value, long reading_date) {
+	public String addReading(String patient_id, String reading_type, String reading_id, String reading_value, long reading_date) {
 		// If the patient exists on record and is set active
 		// then add the reading to that patient
 		for(Patient patient : patients) {
