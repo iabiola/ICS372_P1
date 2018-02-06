@@ -55,6 +55,8 @@ public class Trial {
 				
 				records.add(new Record(
 					patient_id, reading_type, reading_id, reading_value, reading_date));
+				// Ensure that patient_id exists as a patient and patient is active:
+				beginStudy(patient_id);
 			}
 			return "File successfully loaded.";
 		} catch(FileNotFoundException e) {
@@ -68,18 +70,10 @@ public class Trial {
 
 	public String saveFile(String filePath) {
 		JsonObject jo = new JsonObject();
-		JsonArray ja = new JsonArray();
 		Gson gson = new Gson();
-		
-		// Convert the Record objects into JSON strings
-		// in order to populate JSON array
-		for(Record record : records) {
-			String jsonString = gson.toJson(record);
-			ja.add(jsonString);
-		}
-		
-		// Add the JSON array as a value to the JSON object
-		jo.add("patient_readings", ja);
+
+		// Just dump the entire array to a Json object.
+		jo.add("patient_readings", gson.toJsonTree(records));
 
 		// Create a new JSON file from the string of JSON object
 		try {	
