@@ -8,12 +8,13 @@ import java.util.Calendar;
 public class Controller extends JPanel implements ActionListener {
     static private final String newline = "\n";
     JButton openButton, saveButton, BeginStudyButton, 
-    		EndStudyButton, AddReadingButton, ExitButton;
+    		EndStudyButton, AddReadingButton, ExitButton,
+    		PrintRecordsButton;
     JTextArea log;
     JFileChooser fc;
-    static private Trial thisTrial;
+    Trial thisTrial;
     
-    public Controller() {
+    private Controller() {
         super(new BorderLayout());
 
         //Create the log first, because the action listeners
@@ -41,6 +42,9 @@ public class Controller extends JPanel implements ActionListener {
         AddReadingButton = new JButton("Add Reading...");
         AddReadingButton.addActionListener(this);
         
+        PrintRecordsButton = new JButton("Print Records");
+        PrintRecordsButton.addActionListener(this);
+        
         ExitButton = new JButton("Exit");
         ExitButton.addActionListener(this);
         
@@ -50,6 +54,7 @@ public class Controller extends JPanel implements ActionListener {
         buttonPanel.add(BeginStudyButton);
         buttonPanel.add(EndStudyButton);
         buttonPanel.add(AddReadingButton);
+        buttonPanel.add(PrintRecordsButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(ExitButton);
 
@@ -188,6 +193,10 @@ public class Controller extends JPanel implements ActionListener {
             	log.append("User cancelled Add Reading." + newline);
             }
             log.setCaretPosition(log.getDocument().getLength());
+        // Print Records to Console Output
+        } else if (e.getSource() == PrintRecordsButton ) {
+            thisTrial.printRecords();
+            thisTrial.printPatients();
         // Exit program
         } else if (e.getSource() == ExitButton) {
         	String[] options = { "Save first...", "Don't save.", "Cancel." };

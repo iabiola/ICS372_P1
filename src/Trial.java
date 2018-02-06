@@ -14,14 +14,26 @@ import java.util.List;
 
 public class Trial {
 
-	static private List<Patient> patients;
-	static private List<Record> records;
+	private List<Patient> patients;
+	private List<Record> records;
 
 	public Trial() {
 		patients = new ArrayList<Patient>();
 		records = new ArrayList<Record>();
 	}
 
+	public void printRecords() {
+		for (Record r : records) {
+			System.out.println(r.toString());
+		}
+	}
+	
+	public void printPatients() {
+		for (Patient p : patients) {
+			System.out.println(p.toString());
+		}
+	}
+	
 	public String loadFile(String filePath) {
 		// Parser parses the JSON file into a JSON tree
 		JsonParser parser = new JsonParser();
@@ -84,8 +96,8 @@ public class Trial {
 	public String addReading(String patient_id, String reading_type, String reading_id, String reading_value, long reading_date) {
 		// If the patient exists on record and is set active
 		// then add the reading to that patient
-		for(Patient patient : patients) {
-			if(patient.getPatient_id() == patient_id && patient.isPatient_active()) {
+		for(Patient p : patients) {
+			if(p.getPatient_id().equals(patient_id) && p.isPatient_active()) {
 				records.add(new Record(patient_id, reading_type, reading_id, reading_value, reading_date));
 				return "New record has been added to patient " + patient_id + ".";
 			}
