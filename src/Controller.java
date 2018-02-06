@@ -181,7 +181,7 @@ public class Controller extends JPanel implements ActionListener {
                 	log.append("Reading ID   : " + ReadingIDText + newline);
                 	log.append("Reading Value: " + ReadingValue + newline);
                 	log.append("Reading Date : " + ReadingDate + newline);
-                	log.append(thisTrial.addReadnig( PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue, 
+                	log.append(thisTrial.addReading( PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue, 
                 			aDate.getTimeInMillis() ));
             	}
             } else {
