@@ -116,7 +116,7 @@ public class Trial {
 		// If the patient exists on record
 		// then set the patient to inactive
 		for(Patient patient : patients) {
-			if(patient_id == patient.getPatient_id()) {
+			if(patient.getPatient_id().equals(patient_id)) {
 				patient.setPatient_active(false);
 				return "Patient " + patient_id + " has ended trial.";
 			}
