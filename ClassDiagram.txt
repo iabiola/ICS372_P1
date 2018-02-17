@@ -21,15 +21,17 @@ class Application {
     .. Members ..
     -Patients: List
     -Records: List
+    -Clinics: List
     
     .. Methods ..
     +Application(): Constructor
     +LoadFile(String)
+    +SaveFile(String)
+    +AddClinic(String, String)
+    +AddReading(String, String, String, Generic, Long)
+    +AddPatient(String, String)
     +BeginStudy(String)
     +EndStudy(String)
-    +AddReading(String, String, String, Generic, Long)
-    +SaveFile(String)
-    
 }
 class Record {
     .. Members ..
