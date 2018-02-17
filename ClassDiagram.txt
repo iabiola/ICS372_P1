@@ -3,12 +3,12 @@
 
 @startuml
 
-title Group Project 1 - Class Diagram
+title Group Project 2 - Class Diagram
 
 
 class Controller {
   .. Members ..
-- PatientTrial: Trial 
+- PatientTrial: Application 
 
   .. Methods ..
 +Controller(): Constructor
@@ -17,13 +17,13 @@ class Controller {
 -createAndShowGUI()
 }
 
-class Trial {
+class Application {
     .. Members ..
     -Patients: List
     -Records: List
     
     .. Methods ..
-    +Trial(): Constructor
+    +Application(): Constructor
     +LoadFile(String)
     +BeginStudy(String)
     +EndStudy(String)
@@ -40,6 +40,7 @@ class Record {
         //type dependent on reading_type
     -reading_date: longInt
         //UNIX time
+    -reading_clinic: String 
     
     .. Methods ..
     +Record(): Constructor
@@ -52,11 +53,76 @@ class Patient {
     
     .. Methods ..
     +Patient(): Constructor
+    +BeginStudy()
+    +EndStudy()
     +Accessors/Mutators as appropriate
 }
 
-Controller "1" *-down- "1" Trial
-Trial "1" *-down- "many" Record
-Trial "1" *-down- "many" Patient
+class Clinic {
+    .. Members ..
+    -clinicName: String
+    -clinicID: String
+    
+    .. Methods ..
+    +Clinic(): Constructor
+    +Accessors/Mutators as appropriate
+}
+
+class FileReader {
+    .. Members ..
+    
+    .. Methods ..
+    -FileReader(): Constructor
+    +read(String) : static function
+}
+
+class FileWriter {
+    .. Members ..
+    
+    .. Methods ..
+    -FileWriter(): Constructor
+    +write(Object) : static function
+}
+
+class WriteJSON {
+    .. Members ..
+    
+    .. Methods ..
+    -WriteJSON(): Constructor
+    +write(Object) : static function
+}
+
+class ReadJSON {
+    .. Members ..
+    
+    .. Methods ..
+    -ReadJSON(): Constructor
+    +read(String) : static function
+}
+
+class ReadXML {
+    .. Members ..
+    
+    .. Methods ..
+    -ReadXML(): Constructor
+    +read(String) : static function
+}
+
+note "These classes don't get instantiated, the just provide utility functions." as H2
+FileReader .. H2
+ReadJSON .. H2
+ReadXML .. H2
+FileWriter .. H2
+WriteJSON .. H2
+
+Controller "1" *-down- "1" Application
+Application "1" *-down- "many" Record
+Application "1" *-down- "many" Patient
+Application "1" *-down- "many" Clinic
+Application <|-right- FileReader
+FileReader <|-right- ReadXML
+FileReader <|-right- ReadJSON
+Application <|-right- FileWriter
+FileWriter <|-right- WriteJSON
 
 @enduml
