@@ -118,9 +118,10 @@ FileWriter .. H2
 WriteJSON .. H2
 
 Controller "1" *-down- "1" Application
-Application "1" *-down- "many" Record
 Application "1" *-down- "many" Patient
 Application "1" *-down- "many" Clinic
+Clinic "1" *-down- "many" Record
+Record "many" *-- "1" Patient
 Application <|-right- FileReader
 FileReader <|-right- ReadXML
 FileReader <|-right- ReadJSON
