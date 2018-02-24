@@ -1,0 +1,12 @@
+Use Case:
+
+Importing data*
+Exporting data
+Creating a reading*
+Creating a patient*
+Creating a clinic*
+Activating / Deactivating a patient
+Displaying information on screen
+Exiting the program
+
+# for details of each unique use case, see SequenceDiagram.txt
