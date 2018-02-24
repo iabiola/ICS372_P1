@@ -1,107 +1,110 @@
 # Web sequence diagram
 # https://www.websequencediagrams.com
 
-title Trial Controller
+title ICS372 - Program 2
 
 note left of Controller: Application Launch
-Controller->Trial: new Trial();
-Trial->Trial: create empty Records <List>
-Trial->Trial: create empty Patients <List>
-note right of Trial: Load initial JSON file
-Trial->Trial: Load [filename].json
-loop foreach record in [filename].json
-    Trial->Record: new Record();
-    Record->Trial: return
-    opt if Record.patientID not in Patients
-        Trial->Patient: new Patient();
-        Patient->Trial: return
-    end
-end
-Trial->Controller: Return Trial/Status.
+Controller->Application: beginTrial()
+Application->FileReader: deserialize()
+FileReader->Application: return deserialized data
+Application->Trial: getInstance()
+Trial->Application: return Trial instance
+Application->Controller: return
+
 
 loop User input loop
-    opt UserSelection - Load new file
-        Controller->Controller: File Selection
-        Controller->Trial: LoadFile([filename])
-        Trial->Trial: Load [filename].json
-        loop foreach record in [filename].json
-            Trial->Patient: checkIsActive();
-            Patient->Trial: boolean T/F
-            opt if PatientID is active
-                Trial->Record: new Record();
-                Record->Trial: return record
-            else else
-                note right of Trial: no-op
-            end
+    opt UserSelection - Load New File
+        Controller->Controller: fileChooser()
+        Controller->Application: loadFile(fileName)
+        Application->FileReader: loadFile(fileName)
+        opt fileName = *.json
+            FileReader->readJSON: read()
+            readJSON->FileReader: return JSON data
         end
-        Trial->Controller: Return status message
-
-    else UserSelection - Begin Study
-        Controller->Controller: Prompt user for new participant ID.
-        Controller->Trial: beginStudy([participantID]);
-        opt if participantID exists in PatientsList
-            Patient->Patient: set active True
-        else else if participantID doesn't exist
-            Trial->Patient: new Patient(participantID);
-            Patient->Trial: return
-            Trial->Trial: append to Patients list
+        opt fileName = *.xml
+            FileReader->readXML: read()
+            readXML->FileReader: return JSON data
         end
-        Trial->Controller: return status message
-
-    else UserSelection - End Study
-        Controller->Controller: Prompt user for participant ID to disable
-        Controller->Trial: endStudy([participantID]);
-        opt if PatientID exists in PatientsList
-            Patient->Patient: set active False
-        else PatientID doesn't exist
-            note right of Trial: no-op
-        end
-        Trial->Controller: return status message
-
-    else UserSelection - Load Additional JSON File
-        Controller->Controller: prompt user for [filename]
-        Controller->Trial: LoadFile([filename].json)
-        note right of Trial: Load new JSON file
-        Trial->Trial: Load [filename].json
-        loop foreach record in [filename].json
-            opt if patientID is in patients and is inactive:
-                note right of Trial: no-op
-            else else
-                Trial->Record: new Record();
-                Record->Trial: return
-                opt if Record.patientID not in Patients
-                    Trial->Patient: new Patient();
-                    Patient->Trial: return
-                end
-            end
-        end
-        Trial->Controller: return status message
-        
-    else UserSelection - Add Reading
-        Controller->Controller: prompt user for information (ID, etc.)
-        Controller->Trial: addReading(information[]);
-        opt if patientID is in PatientsList and is inactive:
-            note right of Trial: no-op, set Status Message
-        else if patientID is NOT in PatientsList
-            note right of Trial: no-op, set Status Message
-        else else conditions are met
-            Trial->Record: new Record()
-            Record->Trial: return
-            Trial->Trial: append to RecordsList
-        end
-        Trial->Controller: return status message
-    
-    else UserSelection - Output JSON File
-        Controller->Controller: Prompt for output filename.
-        Controller->Trial: saveFile([filename]);
-        note right of Trial: Dump RecordsList to JSON file.
-        Trial->Controller: return status message
-    
-    else UserSelection - End Program
-        Controller->Controller: end self
-
+        FileReader->Application: return JSON data
+        Application->Controller: return status
     end
+    
+    opt UserSelection - Export File
+        Controller->Controller: fileChooser()
+        Controller->Application: export(fileName)
+        Application->FileWriter: write(fileName)
+        FileWriter->FileWriter: export JSON
+        FileWriter->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - Activate Patient
+        Controller->Controller: requestPatientID()
+        Controller->Application: activate(patientID)
+        Application->Trial: getInstance()
+        Trial->Application: return Trial instance
+        Application->Trial: activatePatient(patientID)
+        Trial->Patient: activate()
+        Patient->Trial: return status
+        Trial->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - Deactivate Patient
+        Controller->Controller: requestPatientID()
+        Controller->Application: deactivate(patientID)
+        Application->Trial: getInstance()
+        Trial->Application: return Trial instance
+        Application->Trial: deactivatePatient(patientID)
+        Trial->Patient: deactivate()
+        Patient->Trial: return status
+        Trial->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - Add Reading
+        Controller->Controller: requestReading()
+        Controller->Application: addReading(readingType, readingID, patientID, readingValue, readingDate, clinicID)
+        Application->Trial: getInstance()
+        Trial->Application: return Trial instance
+        Application->Trial: addReading(readingType, readingID, patientID, readingValue, readingDate, clinicID)
+        Trial->Patient: new Reading(readingType, readingID, patientID, readingValue, readingDate, clinicID)
+        Patient->Trial: return status
+        Trial->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - Add Clinic
+        Controller->Controller: requestClinicInfo()
+        Controller->Application: addClinic(clinicID, clinicName)
+        Application->Trial: getInstance()
+        Trial->Application: return Trial instance
+        Application->Trial: addClinic(clinicID, clinicName)
+        Trial->Patient: new Clinic(clinicID, clinicName)
+        Patient->Trial: return status
+        Trial->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - Add Patient
+        Controller->Controller: requestPatientID()
+        Controller->Application: addPatient(patientID)
+        Application->Trial: getInstance()
+        Trial->Application: return Trial instance
+        Application->Trial: addPatient(patientID)
+        Trial->Patient: new Patient(patientID)
+        Patient->Trial: return status
+        Trial->Application: return status
+        Application->Controller: return status
+    end
+    
+    opt UserSelection - End Program
+        Controller->Controller: getConfirmation
+        Controller->Application: exit()
+        Application->FileWriter: serialize(Trial.getInstance())
+        FileWriter->Application: return status
+        Application->Controller: return status
+        Controller->Controller: self.exit()
+    end
+    
 end
-
-note left of Controller: Application Exit
-

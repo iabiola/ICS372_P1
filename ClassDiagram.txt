@@ -86,6 +86,7 @@ class FileReader {
     .. Methods ..
     -FileReader(): Constructor
     +read(String) : static function
+    +deserialize(String): static function
 }
 
 class FileWriter {
@@ -94,6 +95,7 @@ class FileWriter {
     .. Methods ..
     -FileWriter(): Constructor
     +write(Object) : static function
+    +serialize(Object): static function
 }
 
 class WriteJSON {
