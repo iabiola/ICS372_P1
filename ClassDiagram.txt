@@ -19,10 +19,7 @@ class Controller {
 
 class Application {
     .. Members ..
-    -Patients: List
-    -Records: List
-    -Clinics: List
-    
+
     .. Methods ..
     +Application(): Constructor
     +LoadFile(String)
@@ -33,7 +30,18 @@ class Application {
     +BeginStudy(String)
     +EndStudy(String)
 }
-class Record {
+class Trial {
+    .. Members ..
+    -Patients: List
+    -Readings: List
+    -Clinics: List
+    -Trial: Trial
+    
+    .. Methods ..
+    -Trial(): Constructor
+    +getInstance(): Trial
+}
+class Reading {
     .. Members ..
     -patient_id: String
     -reading_type: String
@@ -45,8 +53,9 @@ class Record {
     -reading_clinic: String 
     
     .. Methods ..
-    +Record(): Constructor
+    +Reading(): Constructor
     +Accessors/Mutators as appropriate
+    +AddReading(String, String, String, Generic, Long)
 }
 class Patient {
     .. Members ..
@@ -57,7 +66,7 @@ class Patient {
     +Patient(): Constructor
     +BeginStudy()
     +EndStudy()
-    +Accessors/Mutators as appropriate
+    +AddPatient(String, String)
 }
 
 class Clinic {
@@ -68,6 +77,7 @@ class Clinic {
     .. Methods ..
     +Clinic(): Constructor
     +Accessors/Mutators as appropriate
+    +AddClinic(String, String)
 }
 
 class FileReader {
@@ -118,14 +128,15 @@ FileWriter .. H2
 WriteJSON .. H2
 
 Controller "1" *-down- "1" Application
-Application "1" *-down- "many" Patient
-Application "1" *-down- "many" Clinic
-Clinic "1" *-down- "many" Record
-Record "many" *-- "1" Patient
+Application "1" *-down- "1" Trial
+Trial "1" *-down- "many" Patient
+Trial "1" *-down- "many" Clinic
+Clinic "1" *-down- "many" Reading
+Reading "many" *-- "1" Patient
 Application <|-right- FileReader
-FileReader <|-right- ReadXML
-FileReader <|-right- ReadJSON
+FileReader <|-down- ReadXML
+FileReader <|-down- ReadJSON
 Application <|-right- FileWriter
-FileWriter <|-right- WriteJSON
+FileWriter <|-down- WriteJSON
 
 @enduml
