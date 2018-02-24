@@ -1,0 +1,17 @@
+Feature 1: 3 new clinics (which readings are from which clinic: track clinic id/name)
+The software SHALL track Clinics by Clinic ID.
+The software SHALL associate readings with a particular Clinic ID.
+
+Feature 2: persist data
+The software SHALL store all active data when prompted by the user, AND at program exit.
+The software SHALL reload all stored data and program initialization.
+
+Feature 3: read XML files
+The software SHALL import reading, clinic, and patient information stored in a JSON format.
+The software SHALL import reading, clinic, and patient information stored in an XML format.
+The software SHALL prompt the user for data missing from imported readings.
+The software SHALL discard readings with missing data that the user is unable to complete.
+
+Feature 4: Graphical user interface:
+The software SHALL allow the user to interact with the system in a friendly interface that is easy to use.
+
