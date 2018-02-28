@@ -1,12 +1,187 @@
-Use Case:
+Possible Use Cases:
 
-Importing data*
-Exporting data
-Creating a reading*
-Creating a patient*
-Creating a clinic*
-Activating / Deactivating a patient
-Displaying information on screen
-Exiting the program
+1. Importing data
+2. Exporting data
+3. Creating a reading
+4. Creating a patient
+5. Creating a clinic
+6. Activating / Deactivating a patient
+7. Exiting the program
 
-# for details of each unique use case, see SequenceDiagram.txt
+
+Use case of Importing Data
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse records data into 	|                                          |
+| the journals. Then the data turns into|                                          |
+| JSON or XML which are loaded onto the |                                          |
+| hospital computer   			|                                          |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|                                          |
+| import a file                         |                                          |
++---------------------------------------+------------------------------------------+
+|                                       | 3. The system opens the file chooser to  |
+|                                       | allow the user to select the file        |
++---------------------------------------+------------------------------------------+
+| 4. The nurses will select the file    |                                          |
++---------------------------------------+------------------------------------------+
+|                                       | 5. The system loads the file into the    |
+|                                       | software and reads the data in the file  |
+|                                       | and when it is done reading the file,    |
+|                                       | it will return back to the menu state for|
+|                                       | further action. When the system reads    |
+|                                       | data associated to a patient, it will    |
+|                                       | activate the patient. If it reads a file |
+|                                       | with missing data, it will request it    |
+|                                       | before it returns to the menu state.     |
++---------------------------------------+------------------------------------------+
+
+
+
+Use case of Exporting Data
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse issues a request to 	|                                          |
+| export the accumulated data from the  |                                          |
+| system into a JSON file               |                                          |
++---------------------------------------+------------------------------------------+
+|                                       | 2. The system parses and writes all      |
+|                                       | the data into a single JSON file         |
++---------------------------------------+------------------------------------------+
+| 3. The nurse then takes the file      |                                          | 
+| and import it to a different system   |                                          |
++---------------------------------------+------------------------------------------+
+
+
+
+Use case of Creating a Reading
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse receives  reading        |					   |
+| data recorded in a journal that needs	|				   	   |
+| to be entered into the system.	|					   |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|					   |
+| create a reading for a patient	|				           |
++---------------------------------------+------------------------------------------+
+|					| 3. The system asks for the reading ID,   |
+|					| reading value, patient ID, clinic ID, etc|
+|					| (basically all the data associated to the|
+|					| particular reading that is being entered |
++---------------------------------------+------------------------------------------+
+| 4. The nurse enters all the necessary |					   |
+| data to create a reading for a patient|					   |
++---------------------------------------+------------------------------------------+
+|					| 5. The system checks to see if there 	   |
+|					| exists an activated patient in the system|
+|					| If not, the system will prompt the user  |
+|				   	| that a new patient is created and        |
+|					| a reading has been added to the patient  |
++---------------------------------------+------------------------------------------+
+
+
+
+Use case of Creating a Patient
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse receives  patient        |					   |
+| data recorded in a journal that needs	|				   	   |
+| to be entered into the system.	|					   |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|					   |
+| create a patient			|				           |
++---------------------------------------+------------------------------------------+
+|					| 3. The system asks for all the necessary |
+|					| information such as patient ID	   |
++---------------------------------------+------------------------------------------+
+| 4. The nurse enters all the necessary |					   |
+| data to create a patient		|					   |
++---------------------------------------+------------------------------------------+
+|					| 5. The system creates a patient with the |
+|					| provided patient ID and activates	   |
++---------------------------------------+------------------------------------------+
+
+
+Use case of Creating a Clinic
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse receives  clinic 	|					   |
+| data recorded in a journal that needs	|				   	   |
+| to be entered into the system.	|					   |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|					   |
+| create a clinic 			|				           |
++---------------------------------------+------------------------------------------+
+|					| 3. The system asks for all the necessary |
+|					| information such as clinic ID		   |
++---------------------------------------+------------------------------------------+
+| 4. The nurse enters all the necessary |					   |
+| data to create a clinic 		|					   |
++---------------------------------------+------------------------------------------+
+|					| 5. The system creates a clinic with the  |
+|					| provided clinic ID 			   |
++---------------------------------------+------------------------------------------+
+
+
+
+Use case of Activating a Patient
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse receives a patient that	|					   |
+| wants to start a clinical trial	|				   	   |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|					   |
+| activate the patient 			|				           |
++---------------------------------------+------------------------------------------+
+|					| 3. The system asks for all the necessary |
+|					| information such as patient ID	   |
++---------------------------------------+------------------------------------------+
+| 4. The nurse enters all the necessary |					   |
+| data to activate the patient 		|					   |
++---------------------------------------+------------------------------------------+
+|					| 5. The system searches for the matching  |
+|					| patient ID and activates the status      |
+|					| if the system fails to find one, then	   |
+|					| it will prompt the user to create one    |
++---------------------------------------+------------------------------------------+
+
+
+Use case of Deactivating a Patient
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse receives a patient that	|					   |
+| wants to end 0a clinical trial	|				   	   |
++---------------------------------------+------------------------------------------+
+| 2. The nurse issues a request to 	|					   |
+| deactivate the patient 		|				           |
++---------------------------------------+------------------------------------------+
+|					| 3. The system asks for all the necessary |
+|					| information such as patient ID	   |
++---------------------------------------+------------------------------------------+
+| 4. The nurse enters all the necessary |					   |
+| data to deactivate the patient 	|					   |
++---------------------------------------+------------------------------------------+
+|					| 5. The system searches for the matching  |
+|					| patient ID and deactivates the status    |
+|					| if the system fails to find one, then	   |
+|					| it will prompt the user to create one    |
++---------------------------------------+------------------------------------------+
+
+
+Use case of Exiting the Program
++---------------------------------------+------------------------------------------+
+|     Actions performed by the actor    |       Responses from the system          |
++---------------------------------------+------------------------------------------+
+| 1. The nurse issues a request to exit	|					   |
+| the program				|				   	   |
++---------------------------------------+------------------------------------------+
+|					| 2. The system serializes all the data	   |
++---------------------------------------+------------------------------------------+
+
