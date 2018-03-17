@@ -9,7 +9,7 @@ public class WriteJSON {
 		return;
 	}
 	
-	public static String write(JsonArray JSONStructure, String filePath) {
+	public String write(JsonArray JSONStructure, String filePath) {
 
 		// Create a new JSON file from the string of JSON object
 		try {	
