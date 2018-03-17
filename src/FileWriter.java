@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 
 public class FileWriter {
 
@@ -6,9 +7,10 @@ public class FileWriter {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void write(Object e)
+	public void write(JsonArray e, String fileName)
 	{
-		
+		WriteJSON.write(e, fileName);
+		return;
 	}
 	
 	public void serialize(Object e)

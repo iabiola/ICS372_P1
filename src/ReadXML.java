@@ -4,7 +4,7 @@ public class ReadXML {
 
 	private ReadXML()
 	{
-		
+		return;
 	}
 	
 	public static JsonArray read(String fileName)
