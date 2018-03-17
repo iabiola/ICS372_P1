@@ -21,7 +21,7 @@ public class ReadJSON {
 		JsonElement jsontree = parser.parse(new FileReader(filePath));
 		// Convert the JSON tree to JSON object
 		JsonObject jo = jsontree.getAsJsonObject();
-		JsonArray ja = jo.getAsJsonArray("patient_readings");
+		JsonArray ja = jo.getAsJsonArray();
 		
 		return ja;
 	}
