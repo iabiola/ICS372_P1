@@ -1,5 +1,9 @@
 import com.google.gson.JsonArray;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class FileWriter {
 
 	private FileWriter() {
@@ -13,9 +17,15 @@ public class FileWriter {
 		return;
 	}
 	
-	public void serialize(Object e)
+	public void serialize(Object e) throws IOException
 	{
-		
+        //Saving of object in a file
+        FileOutputStream fos = new FileOutputStream("state.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(e);
+        oos.close();
+        fos.close();
 	}
 	
 }

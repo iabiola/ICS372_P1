@@ -1,5 +1,6 @@
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import org.json.JSONException;
 
@@ -26,9 +27,17 @@ public class FileReader {
 		return null;
 	}
 	
-	public void deserialize(Object e)
+	public Object deserialize() throws ClassNotFoundException, IOException
 	{
-		
+        FileInputStream fis = new FileInputStream("state.ser");
+        ObjectInputStream oin = new ObjectInputStream(fis);
+         
+        Object thisTrial = oin.readObject();
+         
+        fis.close();
+        oin.close();
+        
+        return thisTrial;
 	}
 	
 }
