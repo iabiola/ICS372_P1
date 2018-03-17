@@ -15,25 +15,14 @@ public class ReadJSON {
 		
 	}
 	
-	public static JsonArray read(String filePath) {
+	public static JsonArray read(String filePath) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
 		// Parser parses the JSON file into a JSON tree
 		JsonParser parser = new JsonParser();
-		try {
-			JsonElement jsontree = parser.parse(new FileReader(filePath));
-			// Convert the JSON tree to JSON object
-			JsonObject jo = jsontree.getAsJsonObject();
-			JsonArray ja = jo.getAsJsonArray("patient_readings");
-
-			return ja;
-		} catch(FileNotFoundException e) {
-			System.out.println("File not found.");
-			return null;
-		} catch(JsonSyntaxException e ) {
-			System.out.println("File could not be loaded.");
-			return null;
-		} catch(JsonIOException e) {
-			System.out.println("File could not be loaded.");
-			return null;
-		}	
+		JsonElement jsontree = parser.parse(new FileReader(filePath));
+		// Convert the JSON tree to JSON object
+		JsonObject jo = jsontree.getAsJsonObject();
+		JsonArray ja = jo.getAsJsonArray("patient_readings");
+		
+		return ja;
 	}
 }

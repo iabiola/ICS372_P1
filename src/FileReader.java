@@ -1,3 +1,10 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.json.JSONException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 public class FileReader {
 
@@ -5,7 +12,7 @@ public class FileReader {
 		return;
 	}
 
-	public Object read(String fileName)
+	public Object read(String fileName) throws JsonIOException, JsonSyntaxException, IOException, JSONException
 	{
 		if (fileName.toLowerCase().contains("xml"))
 		{
