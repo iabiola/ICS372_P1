@@ -6,7 +6,7 @@ public class WriteJSON {
 
 	private WriteJSON()
 	{
-		
+		return;
 	}
 	
 	public String write(JsonArray JSONStructure, String filePath) {

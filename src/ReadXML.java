@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 
 public class ReadXML {
 
@@ -6,9 +7,9 @@ public class ReadXML {
 		
 	}
 	
-	public static void read(String fileName)
+	public static JsonArray read(String fileName)
 	{
-		return;
+		return null;
 	}
 	
 }
