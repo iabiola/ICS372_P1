@@ -12,16 +12,31 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trial {
+public class Trial implements java.io.Serializable {
 
-	private List<Patient> patients;
-	private List<Record> records;
+	private ArrayList<Patient> patients;
+	private ArrayList<Record> records;
+	private ArrayList<Clinic> clinic;
+	private static Trial trial;
 
 	public Trial() {
 		patients = new ArrayList<Patient>();
 		records = new ArrayList<Record>();
 	}
 
+	private static Trial getInstance() {
+		if (trial == null) {
+			synchronized(trial){
+				
+				if (trial == null) {
+					trial = new Trial();
+				}
+			}
+		}
+		
+		return trial;
+	}
+	
 	public void printRecords() {
 		for (Record r : records) {
 			System.out.println(r.toString());
