@@ -1,5 +1,6 @@
-public class Patient {
 
+public class Patient {
+	
 	private String patient_id;
 	private boolean patient_active;
 
@@ -17,4 +18,5 @@ public class Patient {
 	public String toString() {
 		return "Patient [patient_id = " + patient_id + ", patient_active = " + patient_active + "]";
 	}
+
 }
