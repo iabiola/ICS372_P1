@@ -6,7 +6,9 @@ import javax.swing.SwingUtilities;
 import java.util.Calendar;
 
 public class Controller extends JPanel implements ActionListener {
-    static private final String newline = "\n";
+    
+	private static final long serialVersionUID = 1L;
+	static private final String newline = "\n";
     JButton loadButton, saveButton, BeginStudyButton, 
     		EndStudyButton, AddReadingButton, AddPatientButton, AddClinicButton, ExitButton,
     		PrintRecordsButton;
