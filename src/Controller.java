@@ -7,12 +7,12 @@ import java.util.Calendar;
 
 public class Controller extends JPanel implements ActionListener {
     static private final String newline = "\n";
-    JButton openButton, saveButton, BeginStudyButton, 
-    		EndStudyButton, AddReadingButton, ExitButton,
+    JButton loadButton, saveButton, BeginStudyButton, 
+    		EndStudyButton, AddReadingButton, AddPatientButton, AddClinicButton, ExitButton,
     		PrintRecordsButton;
     JTextArea log;
     JFileChooser fc;
-    Trial thisTrial;
+    Application application;
     
     private Controller() {
         super(new BorderLayout());
@@ -27,8 +27,8 @@ public class Controller extends JPanel implements ActionListener {
         //Create a file chooser
         fc = new JFileChooser();
 
-        openButton = new JButton("Load JSON...");
-        openButton.addActionListener(this);
+        loadButton = new JButton("Load JSON...");
+        loadButton.addActionListener(this);
 
         saveButton = new JButton("Export JSON...");
         saveButton.addActionListener(this);
@@ -42,6 +42,12 @@ public class Controller extends JPanel implements ActionListener {
         AddReadingButton = new JButton("Add Reading...");
         AddReadingButton.addActionListener(this);
         
+        AddPatientButton = new JButton("Add Patient...");
+        AddPatientButton.addActionListener(this);
+        
+        AddClinicButton = new JButton("Add Clinic...");
+        AddClinicButton.addActionListener(this);
+        
         PrintRecordsButton = new JButton("Print Records");
         PrintRecordsButton.addActionListener(this);
         
@@ -50,31 +56,33 @@ public class Controller extends JPanel implements ActionListener {
         
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
-        buttonPanel.add(openButton);
+        buttonPanel.add(loadButton);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(AddReadingButton);
+        buttonPanel.add(AddPatientButton);
+        buttonPanel.add(AddClinicButton);
         buttonPanel.add(BeginStudyButton);
         buttonPanel.add(EndStudyButton);
-        buttonPanel.add(AddReadingButton);
         buttonPanel.add(PrintRecordsButton);
-        buttonPanel.add(saveButton);
         buttonPanel.add(ExitButton);
 
         //Add the buttons and the log to this panel.
         add(buttonPanel, BorderLayout.PAGE_START);
         add(logScrollPane, BorderLayout.CENTER);
         
-        thisTrial = new Trial();
+        application = new Application();
     }
 
     public void actionPerformed(ActionEvent e) {
 
-        //Handle open button action.
-        if (e.getSource() == openButton) {
+        //Handle load button action.
+        if (e.getSource() == loadButton) {
             int returnVal = fc.showOpenDialog(Controller.this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 log.append("Opening: " + file.getAbsolutePath() + "." + newline);
-                log.append(thisTrial.loadFile(file.getAbsolutePath())+newline);
+                log.append(application.loadFile(file.getAbsolutePath())+newline);
                 
             } else {
                 log.append("Open command cancelled by user." + newline);
@@ -87,7 +95,7 @@ public class Controller extends JPanel implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 log.append("Saving: " + file.getAbsolutePath() + "." + newline);
-                log.append(thisTrial.saveFile(file.getAbsolutePath())+newline);
+                log.append(application.saveFile(file.getAbsolutePath())+newline);
             } else {
                 log.append("Save command cancelled by user." + newline);
             }
@@ -99,7 +107,7 @@ public class Controller extends JPanel implements ActionListener {
             if ( ( PatientID != null ) && ( PatientID.length() > 0 ) )
             { 
             	log.append("Attempting to set patient ID: " + PatientID + " active for Trial." + newline);
-                log.append(thisTrial.beginStudy(PatientID) + newline);
+                log.append(application.beginStudy(PatientID) + newline);
            	} else {
            		log.append("User cancelled command." + newline);
            	}
@@ -111,7 +119,7 @@ public class Controller extends JPanel implements ActionListener {
             if ( ( PatientID != null ) && ( PatientID.length() > 0 ) )
             { 
             	log.append("Attempting to set patient ID: " + PatientID + " inactive for Trial." + newline);
-            	log.append(thisTrial.endStudy(PatientID) + newline);
+            	log.append(application.endStudy(PatientID) + newline);
            	} else {
            		log.append("User cancelled command." + newline);
            	}
@@ -126,6 +134,7 @@ public class Controller extends JPanel implements ActionListener {
         	JTextField reading_id = new JTextField(24);
         	JTextField reading_value = new JTextField(24);
         	JTextField reading_date = new JTextField(24);
+        	JTextField clinic_id = new JTextField(24);
         	
         	JPanel myPanel = new JPanel();
         	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -139,6 +148,8 @@ public class Controller extends JPanel implements ActionListener {
             myPanel.add(reading_value);
             myPanel.add(new JLabel("Reading Date: MM/DD/YYYY: "));
             myPanel.add(reading_date);
+            myPanel.add(new JLabel("Clinic ID: "));
+            myPanel.add(clinic_id);
             
             int result = JOptionPane.showConfirmDialog(null, myPanel, 
                     "Please Enter Reading Values", JOptionPane.OK_CANCEL_OPTION);
@@ -148,6 +159,7 @@ public class Controller extends JPanel implements ActionListener {
             	String ReadingIDText = reading_id.getText();
             	String ReadingValue = reading_value.getText();
             	String ReadingDate = reading_date.getText();
+            	String ClinicIDText = clinic_id.getText();
             	
             	// Parse Date.
             	boolean DateIsValid = true;
@@ -177,7 +189,8 @@ public class Controller extends JPanel implements ActionListener {
             			( ReadingTypeText.length() < 1 ) | (ReadingTypeText == null ) |
             			( ReadingIDText.length() < 1 ) | (ReadingIDText == null ) |
             			( ReadingValue.length() < 1 ) | (ReadingValue == null ) |
-            			DateIsValid != true )
+            			DateIsValid != true |
+            			  ClinicIDText.length() < 1 | ClinicIDText == null)
             	{
             		log.append("Could not add Reading - user left required input blank or malformed date." + newline);
             	} else {
@@ -186,17 +199,83 @@ public class Controller extends JPanel implements ActionListener {
                 	log.append("Reading ID   : " + ReadingIDText + newline);
                 	log.append("Reading Value: " + ReadingValue + newline);
                 	log.append("Reading Date : " + ReadingDate + newline);
-                	log.append(thisTrial.addReading( PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue, 
-                			aDate.getTimeInMillis() ));
+                	log.append("Clinic ID    : " + ClinicIDText + newline);
+                	log.append(application.addReading( PatientIDText, ReadingTypeText, ReadingIDText, ReadingValue, aDate.getTimeInMillis(), ClinicIDText ));
             	}
             } else {
             	log.append("User cancelled Add Reading." + newline);
             }
             log.setCaretPosition(log.getDocument().getLength());
-        // Print Records to Console Output
-        } else if (e.getSource() == PrintRecordsButton ) {
-            thisTrial.printRecords();
-            thisTrial.printPatients();
+        
+        } 
+        	// handle AddPatient action
+        else if (e.getSource() == AddPatientButton) {
+        	
+        	// Prompt user for record data.
+        	JTextField patient_id = new JTextField(24);
+        	
+        	JPanel myPanel = new JPanel();
+        	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+            myPanel.add(new JLabel("Patient ID:"));
+            myPanel.add(patient_id);
+            
+            int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                    "Please Enter Patint ID", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+            	String PatientIDText = patient_id.getText();
+            	
+            	if ( ( PatientIDText.length() < 1 ) | (PatientIDText == null ) )
+            	{
+            		log.append("Could not add Patient - user left required input blank" + newline);
+            	} else {
+                	log.append("Patient ID   : " + PatientIDText + newline);
+                	log.append(application.addPatient( PatientIDText ) );
+            	}
+            } else {
+            	log.append("User cancelled Add Patient." + newline);
+            }
+            log.setCaretPosition(log.getDocument().getLength());
+        
+        } 
+    	// handle AddClinic action
+        else if (e.getSource() == AddClinicButton) {
+        	
+        	// Prompt user for record data.
+        	JTextField clinic_id = new JTextField(24);
+        	JTextField clinic_name = new JTextField(24);
+        	
+        	JPanel myPanel = new JPanel();
+        	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+            myPanel.add(new JLabel("Clinic ID:"));
+            myPanel.add(clinic_id);
+            myPanel.add(new JLabel("Clinic Name:"));
+            myPanel.add(clinic_name);
+            
+            int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                    "Please Enter Clinic Values", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+            	String ClinicIDText = clinic_id.getText();
+            	String ClinicNameText = clinic_name.getText();
+
+            	if ( ( ClinicIDText.length() < 1 ) | (ClinicIDText == null ) |
+            			(ClinicNameText.length() < 1) | (ClinicNameText == null))
+            	{
+            		log.append("Could not add Clinic - user left required input blank" + newline);
+            	} else {
+                	log.append("Clinic ID   : " + ClinicIDText + newline);
+                	log.append("Clinic Name   : " + ClinicNameText + newline);
+                	log.append(application.addClinic( ClinicIDText, ClinicNameText ) );
+            	}
+            } else {
+            	log.append("User cancelled Add Clinic." + newline);
+            }
+            log.setCaretPosition(log.getDocument().getLength());
+        
+        } 
+        
+     // Print Records to Console Output
+        else if (e.getSource() == PrintRecordsButton ) {
+            log.append( application.printReadings() );
         // Exit program
         } else if (e.getSource() == ExitButton) {
         	String[] options = { "Save first...", "Don't save.", "Cancel." };
@@ -208,9 +287,8 @@ public class Controller extends JPanel implements ActionListener {
         	{
             	int returnVal = fc.showSaveDialog(Controller.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile();
-                    log.append("Saving: " + file.getName() + "." + newline);
-                    log.append(thisTrial.saveFile(file.getName())+newline);        		
+                    log.append("Saving all the data...");
+                    log.append(application.saveData()+newline);        		
                 }
                 System.exit(0);
         	}
