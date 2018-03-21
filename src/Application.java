@@ -3,6 +3,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
 public class Application{
 	private List <Patient> patients;
 	private List <Reading> reading;
@@ -92,7 +99,7 @@ public class Application{
 	
 	public String addClinic(String clinicName, String clinicID) {
 		for (Clinic c: clinic) {
-			if (c.getClinicName().equals(clinicName) && c.getClinicID().equals(ClinicID)) {
+			if (c.getClinicName().equals(clinicName) && c.getClinicID().equals(clinicID)) {
 				clinic.add(new Clinic(clinicName, clinicID));
 				return "New clinic has been added ";
 			}
