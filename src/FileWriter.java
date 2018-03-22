@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 
 public class FileWriter {
 
-	private FileWriter() {
+	FileWriter() {
 		return;
 		// TODO Auto-generated constructor stub
 	}

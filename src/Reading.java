@@ -79,6 +79,12 @@ public class Reading {
 		this.reading_clinic = reading_clinic;
 	}
 	
+	public String toString() {
+		return "Reading [patient_id = " + patient_id + ", reading_type = " + reading_type + ", reading_id = " + reading_id + ", reading date = " + reading_date + ", reading_clinic = " + reading_clinic + "]";
+	}
+}
+
+	
 	
 		
 	
@@ -86,4 +92,4 @@ public class Reading {
 	
 	
 
-}
+

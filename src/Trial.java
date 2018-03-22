@@ -37,6 +37,7 @@ public class Trial implements java.io.Serializable {
 		return trial;
 	}
 	
+/*
 	public void printRecords() {
 		for (Record r : records) {
 			System.out.println(r.toString());
@@ -138,4 +139,5 @@ public class Trial implements java.io.Serializable {
 		}
 		return "Patient " + patient_id + " has not been found.";
 	}
+*/
 }

@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -15,7 +16,9 @@ public class Application{
 	private List <Reading> reading;
 	private List <Clinic> clinic;
 	
-
+	JsonObject jo = new JsonObject();
+	JsonArray j = new JsonArray();
+	Gson gson = new Gson();
 
 	public Application() {
 		patients = new ArrayList<Patient>();
@@ -59,6 +62,49 @@ public class Application{
 	
 	
 	}	
+	
+	
+	public String saveFile(String filePath) {
+		
+
+		// Just dump the entire array to a Json object.
+		jo.add("patient_readings", gson.toJsonTree(reading));
+		j.add(jo);
+
+		// Create a new JSON file from the string of JSON object
+		try {	
+			FileWriter writer = new FileWriter();
+			// Write the file to the array using the method in the FileWriter class.
+			writer.write(j, filePath);
+			
+			return "File successfully saved.";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "File could not be saved.";
+		}	
+	}
+	
+	public String saveData() {
+		try {	
+			FileWriter writer = new FileWriter();
+			// Write the file to the array using the method in the FileWriter class and serialize it 
+			writer.serialize(j);
+			
+			return "Data successfully saved.";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "Data could not be saved.";
+		}	
+		
+	}
+	
+	
+	
+	public void printReadings() {
+		for (Reading r : reading) {
+			System.out.println(r.toString());
+		}
+	}
 	
 	public String beginStudy(String patient_id) {
 		// If the patient exists on record then set the patient to active
@@ -107,8 +153,8 @@ public class Application{
 		return "Clinic could not be added because we the Clinic is not on our record ";
 	}
 	
-	public String addPatient(String patient_id, boolean patient_active ) {
-		patients.add(new Patient(patient_id, patient_active));
+	public String addPatient(String patient_id ) {
+		patients.add(new Patient(patient_id, true));
 		return "Patient has been added";
 				
 	}
