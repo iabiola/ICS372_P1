@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.JsonArray;
+
 class FileWriterTest {
 	
 	/*JsonArray value = Json.createArrayBuilder()
@@ -18,7 +20,7 @@ class FileWriterTest {
 
 	@Test
 	void test() {
-		FileWriter fw = new FileWriter();
+		// FileWriter fw = new FileWriter();
 		
 		JsonArray ja = new JsonArray();
 		
@@ -29,7 +31,7 @@ class FileWriterTest {
 		
 		
 		String fileName =new String("temp.txt");
-		fw.write(ja, fileName);
+		FileWriter.write(ja, fileName);
 		
 		
 		//assertNull();
