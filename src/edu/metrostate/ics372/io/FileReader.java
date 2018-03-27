@@ -1,3 +1,5 @@
+package edu.metrostate.ics372.io;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +15,7 @@ public class FileReader {
 		return;
 	}
 
-	public Object read(String fileName) throws JsonIOException, JsonSyntaxException, IOException, JSONException
+	public static Object read(String fileName) throws JsonIOException, JsonSyntaxException, IOException, JSONException
 	{
 		if (fileName.toLowerCase().contains("xml"))
 		{
@@ -27,7 +29,7 @@ public class FileReader {
 		return null;
 	}
 	
-	public Object deserialize() throws ClassNotFoundException, IOException
+	public static Object deserialize() throws ClassNotFoundException, IOException
 	{
         FileInputStream fis = new FileInputStream("state.ser");
         ObjectInputStream oin = new ObjectInputStream(fis);

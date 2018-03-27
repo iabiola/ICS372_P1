@@ -1,5 +1,5 @@
+package edu.metrostate.ics372.io;
 import java.io.FileWriter;
-
 import com.google.gson.JsonArray;
 
 public class WriteJSON {
