@@ -7,26 +7,18 @@ import java.util.List;
 public class Trial implements Serializable {
 	
 	private static final long serialVersionUID = 8968341436485461953L;
-	private List<Patient> patients;
-	private List<Reading> readings;
-	private List <Clinic> clinics;
-	private static Trial trial = null;
+	private List<Patient> patients = new ArrayList<Patient>();
+	private List<Reading> readings = new ArrayList<Reading>();
+	private List <Clinic> clinics = new ArrayList<Clinic>();
+	private static Trial instance = null;
 	
-	public Trial() {
-		this.patients = new ArrayList<Patient>();
-		this.readings = new ArrayList<Reading>();
-		this.clinics = new ArrayList<Clinic>();
-	}
+	public Trial() {}
 	
 	public static Trial getInstance() {
-		if (trial == null) {
-			synchronized(trial){
-				if (trial == null) {
-					trial = new Trial();
-				}
-			}
+		if (instance == null) {
+			instance = new Trial();		
 		}	
-		return trial;
+		return instance;
 	}
 	
 	public List<Patient> getPatients() { return patients; }

@@ -6,11 +6,13 @@ import javax.swing.*;
 import javax.swing.SwingUtilities;
 
 import edu.metrostate.ics372.application.Application;
+import edu.metrostate.ics372.domain.Trial;
 
 import java.util.Calendar;
 
 public class Controller extends JPanel implements ActionListener {
 	
+	private static final long serialVersionUID = 1L;
 	// explanatory variables
 	private static final String NEWLINE = "\n";
 	private static final int LOG_ROWS = 5;
@@ -343,11 +345,8 @@ public class Controller extends JPanel implements ActionListener {
                     null, options, options[0]);
         	if ( choice == 0 )
         	{
-            	int returnVal = fc.showSaveDialog(Controller.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    log.append("Saving all the data...");
-                    log.append(application.saveData()+NEWLINE);        		
-                }
+                log.append("Saving all the data...");
+                log.append(application.saveData()+NEWLINE);        		
                 System.exit(0);
         	}
         	

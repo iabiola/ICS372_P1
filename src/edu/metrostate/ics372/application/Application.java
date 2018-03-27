@@ -1,14 +1,15 @@
 package edu.metrostate.ics372.application;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 import edu.metrostate.ics372.domain.*;
 import edu.metrostate.ics372.io.*;
 
-public class Application{
+public class Application {
 	
 	public String loadFile(String filePath) {
 		try {
@@ -35,17 +36,32 @@ public class Application{
 	}	
 	
 	public String saveFile(String filePath) {
+		List<Reading> readings = Trial.getInstance().getReadings();
+		
 		JsonArray ja = new JsonArray();
-		FileWriter.write(ja, filePath);
-		return "";
+		JsonObject jo = new JsonObject();
+		Gson gson = new Gson();
+		
+		jo.add("patient_readings", gson.toJsonTree(readings));
+		ja.add(jo);
+		return FileWriter.write(ja, filePath);
 	}
 	
 	public String saveData() {
-		return "";
+		try {
+			return FileWriter.serialize( Trial.getInstance() );
+		} catch (IOException e) {
+			return "Data could not be saved!";
+		}
 	}
 	
 	public String printReadings() {
-		return "";
+		List<Reading> readings = Trial.getInstance().getReadings();
+		String text = "";
+		for(Reading r : readings) {
+			text.concat(r.toString() + "\n");
+		}
+		return text;
 	}
 	
 	public String beginStudy(String patient_id) {
@@ -86,7 +102,7 @@ public class Application{
 				return "New reading has been added to patient " + patient_id + "at the clinic " + reading_clinic +".";
 			}
 		}
-		return "Reading could not be added: patient " + patient_id + " is not on record or is inactive.";
+		return "Reading could not be added: patient " + patient_id + " is not on record or is inactive. Please add the patient " + patient_id + " first!";
 	}
 	
 	public String addClinic(String clinicID) {

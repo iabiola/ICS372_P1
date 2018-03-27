@@ -13,13 +13,12 @@ public class FileWriter {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void write(JsonArray e, String fileName)
+	public static String write(JsonArray e, String fileName)
 	{
-		WriteJSON.write(e, fileName);
-		return;
+		return WriteJSON.write(e, fileName);
 	}
 	
-	public static void serialize(Object e) throws IOException
+	public static String serialize(Object e) throws IOException
 	{
         //Saving of object in a file
         FileOutputStream fos = new FileOutputStream("state.ser");
@@ -28,6 +27,7 @@ public class FileWriter {
         oos.writeObject(e);
         oos.close();
         fos.close();
+        return "Data successfully serialized!";
 	}
 	
 }
