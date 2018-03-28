@@ -149,7 +149,7 @@ public class Application {
 		List<Reading> readings = Trial.getInstance().getReadings();
 		String text = "";
 		for(Reading r : readings) {
-			text.concat(r.toString() + "\n");
+			text += (r.toString() + "\n");
 		}
 		return text;
 	}
@@ -197,14 +197,11 @@ public class Application {
 	
 	public String addClinic(String clinicID) {
 		List<Clinic> clinics = Trial.getInstance().getClinics();
-		for (Clinic c: clinics) {
-			if (c.getClinicID().equals(clinicID)) {
+		
 				clinics.add(new Clinic(clinicID));
 				return "New clinic has been added ";
 			}
-		}
-		return "Clinic could not be added because we the Clinic is not on our record ";
-	}
+		
 	
 	public String addPatient(String patient_id ) {
 		List<Patient> patients = Trial.getInstance().getPatients();
