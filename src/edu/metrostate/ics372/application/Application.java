@@ -1,5 +1,6 @@
 package edu.metrostate.ics372.application;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -12,25 +13,101 @@ import edu.metrostate.ics372.io.*;
 public class Application {
 	
 	public String loadFile(String filePath) {
+		Date now = new Date();      
+		Long currentTime = new Long(now.getTime()/1000);
 		try {
-			JsonArray ja = (JsonArray) FileReader.read(filePath);
-			for(Object o : ja) {
-				JsonObject reading = (JsonObject) o;
-				// extract data from each reading
-				String patient_id = reading.get("patient_id").getAsString();
-				String reading_type = reading.get("reading_type").getAsString();
-				String reading_id = reading.get("reading_id").getAsString();
-				String reading_value = reading.get("reading_value").getAsString();
-				long reading_date = reading.get("reading_date").getAsLong();
-				String reading_clinic = reading.get("reading_clinic").getAsString();
-				
-				// populate the java objects
-				Trial.getInstance().getReadings().add( new Reading(patient_id, reading_type, reading_id, reading_value, reading_date, reading_clinic) );
-				Trial.getInstance().getPatients().add( new Patient(patient_id, true) );
-				Trial.getInstance().getClinics().add( new Clinic(reading_clinic) );	
+			JsonObject jo = (JsonObject) FileReader.read(filePath);
+			
+			// We've read in a JsonObject from the file. See if it contains
+			// a patient_readings array. If it does, import the readings in that array.
+			JsonArray ja;
+			try {
+				ja = jo.get("patient_readings").getAsJsonArray(); 
+				for(Object o : ja) {
+					try {
+						JsonObject reading = (JsonObject) o;
+						// extract data from each reading
+						String patient_id = reading.get("patient_id").getAsString();
+						String reading_type = reading.get("reading_type").getAsString();
+						String reading_id = reading.get("reading_id").getAsString();
+						String reading_value = reading.get("reading_value").getAsString();
+						long reading_date = reading.get("reading_date").getAsLong();
+						String reading_clinic = reading.get("reading_clinic").getAsString();
+
+						//
+//						System.out.println(patient_id);
+//						System.out.println(reading_type);
+//						System.out.println(reading_id);
+//						System.out.println(reading_value);
+//						System.out.println(reading_date);
+//						System.out.println(reading_clinic);
+						//
+						
+						// populate the java objects						
+						Trial.getInstance().getReadings().add( new Reading(patient_id, reading_type, reading_id, reading_value, reading_date, reading_clinic) );
+						Trial.getInstance().getPatients().add( new Patient(patient_id, true) );
+						Trial.getInstance().getClinics().add( new Clinic(reading_clinic) );	
+					} catch (NullPointerException f) {
+						System.out.println("An error occured: json missing data");
+						System.out.println(o.toString());
+						continue;
+					} catch (Exception e) {
+						System.out.println("Some other error occurred.");
+						continue;
+					}
+				}
+				return "File successfully loaded!";
+			} catch (Exception e) {
+				// Well, okay, so if we get here, there was no patient_readings key.
+				// That probably means we got an XML file in the other file format.
+				System.out.println("Formatting of this is not consistent with JSON file format. Proceeding in XML import mode.");
 			}
-			return "File successfully loaded!";
+			try {
+				JsonObject rs = jo.get("ReadingSet").getAsJsonObject();
+				String ClinicID = rs.get("Clinic").getAsJsonObject().get("id").toString();
+				
+				JsonArray ra = rs.get("Reading").getAsJsonArray();
+				for (Object o : ra)
+				{
+//					System.out.println(o.toString());
+					JsonObject reading = (JsonObject) o;
+					String patient_id = reading.get("Patient").getAsString();
+//					System.out.println(patient_id);
+					String reading_type = reading.get("type").getAsString();
+//					System.out.println(reading_type);
+					String reading_id = reading.get("id").getAsString();
+//					System.out.println(reading_id);
+					Long reading_date = currentTime;
+//					System.out.println(reading_date);
+					String reading_clinic = ClinicID;
+//					System.out.println(reading_clinic);				
+					// Now we have to extract the Value, which may just be a Value, or
+					// it may be the "content" field in the "value". Fail Through.
+					String reading_value;
+					try {
+						reading_value = reading.get("Value").getAsJsonObject().get("content").getAsString();
+					} catch (NullPointerException e) {
+						reading_value = reading.get("Value").getAsString();
+					} catch (IllegalStateException e) {
+						reading_value = reading.get("Value").getAsString();
+					}
+//					System.out.println(reading_value);
+					
+					// populate the java objects						
+					Trial.getInstance().getReadings().add( new Reading(patient_id, reading_type, reading_id, reading_value, reading_date, reading_clinic) );
+					Trial.getInstance().getPatients().add( new Patient(patient_id, true) );
+					Trial.getInstance().getClinics().add( new Clinic(reading_clinic) );	
+
+				}
+				
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			return "Hello World.";			
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "File could not be loaded!";
 		}
 	}	

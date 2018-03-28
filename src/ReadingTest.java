@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.metrostate.ics372.domain.Reading;
+
 public class ReadingTest {
 
 	@Test
@@ -17,7 +19,7 @@ public class ReadingTest {
 		String reading_ID = myReading.getReading_id();
 		assertEquals("T001",reading_ID);
 		
-		String readingClinic = myReading.getReading_clinic();
+		String readingClinic = myReading.getClinic_id();
 		assertEquals("Fairview", readingClinic);
 		
 		long readingDate = myReading.getReading_date();

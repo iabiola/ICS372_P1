@@ -8,6 +8,8 @@ import org.json.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import edu.metrostate.ics372.io.FileWriter;
+
 public class FileWriterTest {
 	
 	/*JsonArray value = Json.createArrayBuilder()
@@ -21,7 +23,7 @@ public class FileWriterTest {
 
 	@Test
 	public void test() {
-		FileWriter fw = new FileWriter();
+		// FileWriter fw = new FileWriter();
 		
 		JsonArray ja = new JsonArray();
 		
@@ -32,7 +34,7 @@ public class FileWriterTest {
 		
 		
 		String fileName =new String("temp.txt");
-		fw.write(ja, fileName);
+		FileWriter.write(ja, fileName);
 		
 		
 		//assertNull();
