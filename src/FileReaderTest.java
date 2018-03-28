@@ -28,7 +28,7 @@ import java.lang.reflect.Modifier;
 import junit.framework.TestCase;
 
 public class FileReaderTest extends TestCase {
-
+//
 	// test the private constructor
     @Test
 	public void testPrivateCons() throws  NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException
