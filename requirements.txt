@@ -13,5 +13,4 @@ The software SHALL prompt the user for data missing from imported readings.
 The software SHALL discard readings with missing data that the user is unable to complete.
 
 Feature 4: Graphical user interface:
-The software SHALL allow the user to interact with the system in a friendly interface that is easy to use.
-
+The software SHALL allow the user to perform tasks by pressing buttons.
