@@ -69,7 +69,7 @@ public class Controller extends JPanel implements ActionListener {
         log.setEditable(false);
         logScrollPane = new JScrollPane(log);
         // buttons
-		importBtn = new JButton("Import JSON");
+		importBtn = new JButton("Import File");
 		exportBtn = new JButton("Export JSON");
         activatePatientBtn = new JButton("Activate Patient");
         deactivatePatientBtn = new JButton("Deactivate Patient");
