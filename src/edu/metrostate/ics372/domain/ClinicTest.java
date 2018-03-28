@@ -1,14 +1,30 @@
 package edu.metrostate.ics372.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import junit.framework.TestCase;
 
-import org.junit.jupiter.api.Test;
+public class ClinicTest extends TestCase {
 
-class ClinicTest {
-
-	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void test() 
+	{
+		@SuppressWarnings("unused")
+		Clinic newClinic = new Clinic("Tempa");
+		 
+		// test getClinicname method
+		@SuppressWarnings("unused")
+		String clinicName = newClinic.getClinicID();
+		
+		//test setClinicName method
+		newClinic.setClinicID("Highland");
+		
+		//test getClinicID method
+		@SuppressWarnings("unused")
+		String getClinicId = newClinic.getClinicID();
+		
+		//test setClinicID method
+		newClinic.setClinicID("5399");
+		
+		// test toString method
+		newClinic.toString();
 	}
 
 }

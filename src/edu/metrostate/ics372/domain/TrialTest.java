@@ -1,13 +1,18 @@
 package edu.metrostate.ics372.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-class TrialTest {
+public class TrialTest {
+
+	@Before
+	public void setUp() throws Exception {
+	}
 
 	@Test
-	void test() {
+	public void test() {
 		fail("Not yet implemented");
 	}
 
