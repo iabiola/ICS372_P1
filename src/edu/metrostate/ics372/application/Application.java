@@ -132,11 +132,26 @@ public class Application {
 		}
 	}
 	
+	public String loadData() {
+		try {	
+			Trial trial = (Trial) FileReader.deserialize();
+			Trial.getInstance().setClinics(trial.getClinics());
+			Trial.getInstance().setPatients(trial.getPatients());
+			Trial.getInstance().setReadings(trial.getReadings());
+			return "Data loaded!";
+		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
+			return "No data to load";
+		}
+		return "";
+	}
+	
 	public String printReadings() {
 		List<Reading> readings = Trial.getInstance().getReadings();
 		String text = "";
 		for(Reading r : readings) {
 			text += (r.toString() + "\n");
+			
 		}
 		return text;
 	}

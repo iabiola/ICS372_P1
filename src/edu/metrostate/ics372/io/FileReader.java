@@ -9,6 +9,8 @@ import org.json.JSONException;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import edu.metrostate.ics372.domain.Trial;
+
 public class FileReader {
 
 	private FileReader() {
