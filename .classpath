@@ -5,6 +5,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/java-json.jar"/>
-	<classpathentry kind="lib" path="/Users/dv/Documents/workspace2/ICS372_P1/lib/junit-jupiter-api-5.1.0-M2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

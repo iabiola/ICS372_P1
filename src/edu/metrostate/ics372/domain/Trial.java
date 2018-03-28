@@ -24,4 +24,9 @@ public class Trial implements Serializable {
 	public List<Patient> getPatients() { return patients; }
 	public List<Reading> getReadings() { return readings; }
 	public List<Clinic> getClinics() { return clinics; }
+	
+	public void setPatients(List<Patient> newPatients) { patients = newPatients; }
+	public void setReadings(List<Reading> newReadings) { readings = newReadings; }
+	public void setClinics(List<Clinic> newClinics) { clinics = newClinics; }
+	
 }
