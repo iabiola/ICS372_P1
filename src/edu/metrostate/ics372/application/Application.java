@@ -112,6 +112,19 @@ public class Application {
 		}
 	}	
 	
+	public String loadData() {
+		try {
+			Trial trial = Trial.getInstance();
+			trial = (Trial) FileReader.deserialize();
+			return "Data Successfully Loaded";
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			return "No data to load";
+		}
+		return "No data to load";
+	}
+	
 	public String saveFile(String filePath) {
 		List<Reading> readings = Trial.getInstance().getReadings();
 		

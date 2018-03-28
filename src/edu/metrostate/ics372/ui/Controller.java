@@ -51,7 +51,8 @@ public class Controller extends JPanel implements ActionListener {
         initComponents();
         addActionListeners();
         addComponents();
-        addPanels();   
+        addPanels(); 
+        loadSavedData();
     }
 	
 	private void initComponents() {	
@@ -69,7 +70,7 @@ public class Controller extends JPanel implements ActionListener {
         log.setEditable(false);
         logScrollPane = new JScrollPane(log);
         // buttons
-		importBtn = new JButton("Import JSON");
+		importBtn = new JButton("Import File");
 		exportBtn = new JButton("Export JSON");
         activatePatientBtn = new JButton("Activate Patient");
         deactivatePatientBtn = new JButton("Deactivate Patient");
@@ -107,6 +108,10 @@ public class Controller extends JPanel implements ActionListener {
 	private void addPanels() {
 		this.add(btnPanel, BorderLayout.PAGE_START);
         this.add(logScrollPane, BorderLayout.CENTER);
+	}
+	
+	private void loadSavedData() {
+		application.loadData();
 	}
 
     public void actionPerformed(ActionEvent e) {
