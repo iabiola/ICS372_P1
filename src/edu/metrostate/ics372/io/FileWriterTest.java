@@ -1,25 +1,28 @@
-package edu.metrostate.ics372.io;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.File;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.json.*;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-class FileWriterTest {
+import edu.metrostate.ics372.io.FileWriter;
+
+public class FileWriterTest {
 	
 	/*JsonArray value = Json.createArrayBuilder()
-    .add(Json.createObjectBuilder()
-        .add("type", "home")
-        .add("number", "212 555-1234"))
-    .add(Json.createObjectBuilder()
-        .add("type", "fax")
-        .add("number", "646 555-4567"))
-    .build();*/
-	
+		     .add(Json.createObjectBuilder()
+		         .add("type", "home")
+		         .add("number", "212 555-1234"))
+		     .add(Json.createObjectBuilder()
+		         .add("type", "fax")
+		         .add("number", "646 555-4567"))
+		     .build();*/
 
 	@Test
-	void test() {
+	public void test() {
 		// FileWriter fw = new FileWriter();
 		
 		JsonArray ja = new JsonArray();
@@ -40,7 +43,7 @@ class FileWriterTest {
 		JSONAssert.assertEquals(expected, data, false);
 		*/
 	}
-	
+
 	/*JSONArray jsonArray = new JSONArray();
     JSONObject j1 = new JSONObject();
     j1.put ("name", "John");
