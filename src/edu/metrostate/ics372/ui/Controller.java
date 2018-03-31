@@ -52,7 +52,7 @@ public class Controller extends JPanel implements ActionListener {
         addActionListeners();
         addComponents();
         addPanels(); 
-        loadSavedData();
+        loadData();
     }
 	
 	private void initComponents() {	
@@ -110,8 +110,8 @@ public class Controller extends JPanel implements ActionListener {
         this.add(logScrollPane, BorderLayout.CENTER);
 	}
 	
-	private void loadSavedData() {
-		application.loadData();
+	private void loadData() {
+		log.append(application.loadData() + NEWLINE);
 	}
 
     public void actionPerformed(ActionEvent e) {
